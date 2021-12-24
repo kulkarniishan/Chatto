@@ -18,11 +18,11 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app)
+const auth = getAuth(app);
 
 
 
 function App() {
-  const auth = getAuth();
   const [user, setUser] = useState(auth.currentUser);
   const [loading, setLoading] = useState(true);
 
@@ -42,7 +42,7 @@ function App() {
         !loading &&
         <div>
           {
-            user ? <Chat user={user} setUser={setUser} app={app} /> : <SignIn db={db} />
+            user ? <Chat user={user} setUser={setUser} db={db}  auth={auth}/> : <SignIn db={db} auth={auth} />
           }
         </div>
       }
