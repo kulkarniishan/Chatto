@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from 'react'
-import { doc, onSnapshot, setDoc, getDoc, where, collection, addDoc, query, orderBy } from "firebase/firestore";
+import { onSnapshot, collection, query, orderBy } from "firebase/firestore";
 
 export default function ChatArea({ user, db, chatId }) {
     const [chats, setChats] = useState([])
@@ -16,14 +16,15 @@ export default function ChatArea({ user, db, chatId }) {
                 unsubscribe()
             }
         }
-    }, [chatId])
+    }, [chatId])// eslint-disable-line react-hooks/exhaustive-deps
+
 
     return (
         <div className=" bg-white h-full grid-flow-row rounded-xl overflow-y-scroll" ref={scrollChatArea}>{
             chatId != null ? <>
                 {
                     chats.length > 0 ? chats.map((value, key) =>
-                        <div key={key} className={`row-span-auto w-1/2 my-6 rounded-lg mx-2 px-2 py-1 ${value.from == user.uid ? 'ml-auto bg-green-200 ' : 'bg-blue-400 '}`} style={{minHeight:'70px'}}>
+                        <div key={key} className={`row-span-auto w-1/2 my-6 rounded-lg mx-2 px-2 py-1 ${value.from === user.uid ? 'ml-auto bg-green-200 ' : 'bg-blue-400 '}`} style={{minHeight:'70px'}}>
                             {value.message}
                         </div>
                     ) : <div>Nothing to show</div>

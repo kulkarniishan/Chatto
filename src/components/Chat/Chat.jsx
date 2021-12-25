@@ -1,5 +1,5 @@
 import React from 'react'
-import { doc, onSnapshot, setDoc, getDoc, where, collection, addDoc, query, documentId, Timestamp } from "firebase/firestore";
+import { doc, onSnapshot, setDoc, getDoc, where, collection, addDoc, query, Timestamp } from "firebase/firestore";
 import { useState, useEffect } from 'react';
 import { signOut } from "firebase/auth";
 import ChatArea from './ChatArea';
@@ -18,7 +18,7 @@ export default function Chat({ user, setUser, db, auth}) {
         return () => {
             unsubscribe()
         }
-    }, [db])
+    }, [db])// eslint-disable-line react-hooks/exhaustive-deps
 
 
     const handleLogout = () => {
@@ -32,7 +32,7 @@ export default function Chat({ user, setUser, db, auth}) {
 
     const sendMessage = () => {
 
-        if (chatField != '') {
+        if (chatField !== '') {
             addDoc(collection(db, 'chat', chatId, 'messages'), {
                 createdAt: Timestamp.now(),
                 message: chatField,
