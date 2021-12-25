@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { getAuth, GoogleAuthProvider } from "firebase/auth";
+import { getAuth } from "firebase/auth";
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 import SignIn from "./components/SignIn/SignIn";
@@ -15,19 +15,20 @@ const firebaseConfig = {
   measurementId: "G-P5SCN6KZ70"
 };
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app)
-const auth = getAuth(app);
+
 
 
 
 function App() {
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app)
+  const auth = getAuth(app);
+  
   const [user, setUser] = useState(auth.currentUser);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-
     auth.onAuthStateChanged((user) => {
       if (user) {
         setUser(user)
@@ -42,7 +43,7 @@ function App() {
         !loading &&
         <div>
           {
-            user ? <Chat user={user} setUser={setUser} db={db}  auth={auth}/> : <SignIn db={db} auth={auth} />
+            user ? <Chat user={user} setUser={setUser} db={db} auth={auth} /> : <SignIn db={db} auth={auth} />
           }
         </div>
       }
